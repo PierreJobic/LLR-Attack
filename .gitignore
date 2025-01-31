@@ -1,0 +1,12 @@
+# Some directory
+/outputs
+/notebooks/*
+
+# pycache
+**/__pycache__/
+
+
+# Specific extensions
+*.pyc
+*.pickle
+*.csv

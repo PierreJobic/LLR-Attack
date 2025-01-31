@@ -1,0 +1,64 @@
+# @package _global_
+
+# defaults:
+#   - override hydra/job_logging: custom
+#   - override hydra/hydra_logging: colorlog
+
+# ID_TO_LABELS = {
+#     1: "Boston Housing",
+#     60: "Liver Disorders",
+#     477: "Real Estate Valuation",
+#     # 555: "Apartment for Rent Classified", # Removed: complicated dataset
+#     597: "Productivity Prediction of Garment Employees",
+#     "MNIST": "MNIST",
+#     "BostonHousing": "Boston Housing",
+#     "UTKFace": "UTKFace",
+#     "SalaryDataset": "Salary Dataset",
+# }
+
+# Dataset Params
+id: 1 # choices = [1, 60, 477, 597, MNIST, BostonHousing, UTKFace, SalaryDataset]
+batch_size: 8
+max_size: 5000
+shuffle: True
+
+# Model Params
+model_name: MLP # choices = [MLP, McMahan_CNN, ResNet18, ResNet34, ResNet50, Trident]
+hidden_layer: 0
+n: 256
+m: 256
+
+# Attack Params
+factor: 60 
+nb_artificial_digits: 0 # Number of artificial digits to add to the values
+attack_name: ns_original # choices = [ns_original, multivariate, statistical]
+
+# Monitoring Params
+verbose: False
+testing: False
+log_level: INFO
+nb_runs: 1
+
+
+# ## Others ## #
+my_excludes:
+  # experiment: experiment*
+  name: dir_name
+  self: my_excludes
+
+# Directories Params
+base_dir: outputs
+dir_name: default
+name: default # A name for this run [will be used for the summary table and outputs folder]
+
+hydra:
+  sweep:
+    dir: ${base_dir}/${dir_name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: "${hydra.job.num}_${my_subdir_suffix: ${hydra.overrides.task}, ${oc.dict.values:my_excludes}}"
+  run:
+    dir: "${base_dir}/${dir_name}/${now:%Y-%m-%d}/${now:%H-%M-%S}/${my_subdir_suffix: ${hydra.overrides.task}, ${oc.dict.values:my_excludes}}"
+  # override the colorglog formatting
+  job_logging:
+    formatters:
+      colorlog:
+        format: '[%(cyan)s%(asctime)s%(reset)s][%(red)s%(name)s%(reset)s][%(log_color)s%(levelname)s%(reset)s] - %(message)s'

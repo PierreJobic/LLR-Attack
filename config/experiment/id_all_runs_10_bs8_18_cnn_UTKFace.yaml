@@ -1,0 +1,10 @@
+# @package _global_
+
+
+hydra:
+  sweeper:
+    params:
+      nb_runs: 10
+      batch_size: 8, 10, 12, 14, 16, 18
+      id: UTKFace # choices = [1, 60, 477, 555, 597, MNIST, BostonHousing, UTKFace, SalaryDataset]
+      model_name: Trident

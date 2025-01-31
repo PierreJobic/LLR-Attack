@@ -1,0 +1,12 @@
+# @package _global_
+
+
+hydra:
+  sweeper:
+    params:
+      nb_runs: 10
+      batch_size: 12
+      n: 32, 64, 128, 256
+      m: 32, 64, 128, 256
+      id: MNIST # choices = [1, 60, 477, 555, 597, MNIST, BostonHousing, UTKFace, SalaryDataset]
+      model_name: McMahan_CNN

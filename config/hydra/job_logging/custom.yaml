@@ -1,0 +1,21 @@
+# TODO: see if i like it like that or if i should change it to a more general logging configuration
+# python logging configuration for tasks
+version: 1
+formatters:
+  simple:
+    format: "[%(asctime)s] %(message)s"
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: simple
+    stream: ext://sys.stdout
+  file:
+    class: logging.FileHandler
+    formatter: simple
+    # relative to the job log directory
+    filename: ${name}_${hydra.job.name}.log
+root:
+  level: INFO
+  handlers: [console, file]
+
+disable_existing_loggers: false
